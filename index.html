@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JGG Esports — 언제나 즐겁게!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Bebas+Neue&family=Oswald:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:       #0D1B3E;
+      --navy-mid:   #132040;
+      --navy-light: #1C2F60;
+      --gold:       #F5B731;
+      --gold-light: #FFD166;
+      --bg:         #F5F5F5;
+      --bg-alt:     #EFEFEF;
+      --white:      #FFFFFF;
+      --text:       #0D1B3E;
+      --text-muted: #666;
+      --lol:        #C8AA6E;
+      --val:        #FF4655;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(13,27,62,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,183,49,0.2);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 10px 48px; }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 38px;
+      width: 38px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    .nav-logo span {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 13px;
+      padding: 9px 22px;
+      border-radius: 3px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 2px; background: var(--gold); border-radius: 2px; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--navy);
+      padding: 24px;
+      border-bottom: 1px solid rgba(245,183,49,0.2);
+      z-index: 99;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .mobile-menu a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mobile-menu.open { display: flex; }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+      background: var(--navy);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 30%, rgba(245,183,49,0.1) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 10% 90%, rgba(28,47,96,0.8) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 90% 90%, rgba(28,47,96,0.8) 0%, transparent 55%),
+        linear-gradient(180deg, #0a1530 0%, #0D1B3E 100%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245,183,49,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,183,49,0.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,183,49,0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-logo {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      border-radius: 50%;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 0 50px rgba(245,183,49,0.5));
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.03); }
+    }
+    .hero-team-name {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(72px, 14vw, 140px);
+      color: var(--white);
+      letter-spacing: 10px;
+      line-height: 1;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .hero-team-name .gold { color: var(--gold); }
+    .hero-slogan {
+      font-size: clamp(16px, 3vw, 24px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .hero-games {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .game-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .game-badge.lol {
+      background: rgba(200,170,110,0.15);
+      border: 1px solid rgba(200,170,110,0.4);
+      color: var(--lol);
+    }
+    .game-badge.val {
+      background: rgba(255,70,85,0.12);
+      border: 1px solid rgba(255,70,85,0.4);
+      color: var(--val);
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 14px;
+      padding: 15px 36px;
+      border-radius: 3px;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(245,183,49,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(245,183,49,0.5);
+    }
+    .btn-outline {
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 15px 36px;
+      border-radius: 3px;
+      border: 2px solid rgba(255,255,255,0.25);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 56px;
+      justify-content: center;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: bounce 2.5s infinite;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(var(--gold), transparent);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section { padding: 96px 24px; }
+    .section-inner { max-width: 1140px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 60px);
+      line-height: 1;
+      letter-spacing: 3px;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section-title .gold { color: var(--gold); }
+    .section-title.light { color: var(--white); }
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 520px;
+    }
+    .section-desc.light { color: rgba(255,255,255,0.55); }
+    .gold-bar {
+      width: 40px;
+      height: 3px;
+      background: var(--gold);
+      margin: 16px 0 32px;
+      border-radius: 2px;
+    }
+
+    /* ─── ROSTER ─── */
+    #roster { background: var(--bg); }
+    .roster-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 48px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .tab-btn {
+      padding: 12px 32px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active { background: var(--navy); color: var(--gold); }
+    .tab-btn:not(:last-child) { border-right: 1px solid rgba(0,0,0,0.1); }
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .roster-panel { display: none; }
+    .roster-panel.active { display: block; }
+    .player-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .player-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+      border-color: var(--gold);
+    }
+    .player-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .player-card:hover::before { transform: scaleX(1); }
+    .player-avatar {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .player-avatar.lol-bg {
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    }
+    .player-avatar.val-bg {
+      background: linear-gradient(135deg, #1a0a0a, #2d0f0f, #1a0a0a);
+    }
+    .player-avatar-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 100px;
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      bottom: -10px;
+      right: 10px;
+      line-height: 1;
+    }
+    .player-game-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .player-game-badge.lol {
+      background: rgba(200,170,110,0.2);
+      border: 1px solid rgba(200,170,110,0.5);
+      color: var(--lol);
+    }
+    .player-game-badge.val {
+      background: rgba(255,70,85,0.15);
+      border: 1px solid rgba(255,70,85,0.5);
+      color: var(--val);
+    }
+    .player-info { padding: 20px 22px 22px; }
+    .player-role {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .player-nickname {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .player-realname {
+      font-size: 12px;
+      color: #999;
+      font-weight: 700;
+    }
+    .player-stats-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .player-stat { text-align: center; flex: 1; }
+    .player-stat-val {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .player-stat-lbl {
+      font-size: 10px;
+      color: #aaa;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) { .roster-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .roster-grid { grid-template-columns: 1fr; } }
+
+    /* 발로란트 피처드 카드 */
+    .val-featured-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .player-card.featured-val {
+      max-width: 600px;
+      width: 100%;
+    }
+    .player-card.featured-val .player-avatar {
+      aspect-ratio: 16/7;
+      font-size: 140px;
+    }
+    .player-card.featured-val .player-avatar-num {
+      font-size: 200px;
+      bottom: -30px;
+      right: 20px;
+    }
+    .player-card.featured-val .player-info {
+      padding: 28px 32px 32px;
+    }
+    .player-card.featured-val .player-role {
+      font-size: 13px;
+      letter-spacing: 5px;
+    }
+    .player-card.featured-val .player-nickname {
+      font-size: 56px;
+      letter-spacing: 4px;
+    }
+    .player-card.featured-val .player-realname {
+      font-size: 14px;
+    }
+    .player-card.featured-val .player-stats-row {
+      margin-top: 20px;
+      padding-top: 20px;
+      gap: 32px;
+    }
+    .player-card.featured-val .player-stat-val {
+      font-size: 20px;
+    }
+    .player-card.featured-val .player-stat-lbl {
+      font-size: 11px;
+    }
+
+    /* ─── ACHIEVEMENTS ─── */
+    #achievements { background: var(--navy); }
+    .achievements-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .achievements-trophies {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .trophy-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(245,183,49,0.15);
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .trophy-card:hover {
+      background: rgba(245,183,49,0.07);
+      border-color: rgba(245,183,49,0.4);
+    }
+    .trophy-icon { font-size: 32px; margin-bottom: 8px; }
+    .trophy-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .trophy-meta { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 1px; }
+    .achievement-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .ach-stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ach-stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+    }
+    .ach-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+    .ach-stat-lbl {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .achievements-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ─── MATCHES ─── */
+    #matches { background: var(--bg-alt); }
+    .matches-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .matches-col-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .matches-col-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(0,0,0,0.1);
+    }
+    .match-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .match-card:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .match-date {
+      text-align: center;
+      min-width: 48px;
+    }
+    .match-date-day {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .match-date-mon {
+      font-size: 10px;
+      color: #999;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .match-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(0,0,0,0.08);
+    }
+    .match-info { flex: 1; }
+    .match-tournament {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .match-vs {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .match-game-tag {
+      font-size: 10px;
+      color: #aaa;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .match-result {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      min-width: 52px;
+      text-align: center;
+    }
+    .match-result.win { color: #2ecc71; }
+    .match-result.loss { color: #e74c3c; }
+    .match-result.upcoming {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--gold);
+      background: rgba(245,183,49,0.1);
+      border: 1px solid rgba(245,183,49,0.3);
+      border-radius: 4px;
+      padding: 4px 10px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) { .matches-grid { grid-template-columns: 1fr; } }
+
+    /* ─── NEWS ─── */
+    #news { background: var(--bg); }
+    .news-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 24px;
+    }
+    .news-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .news-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+    .news-thumb {
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+    }
+    .news-thumb.navy-bg { background: linear-gradient(135deg, var(--navy), var(--navy-light)); }
+    .news-thumb.gold-bg { background: linear-gradient(135deg, #3d2b00, #7a5500); }
+    .news-thumb.dark-bg { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+    .news-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .news-body { padding: 18px 20px 20px; }
+    .news-date { font-size: 11px; color: #aaa; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+    .news-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .news-card.featured .news-title { font-size: 18px; }
+    .news-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    @media (max-width: 900px) {
+      .news-grid { grid-template-columns: 1fr 1fr; }
+      .news-card.featured { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .news-grid { grid-template-columns: 1fr; }
+      .news-card.featured { grid-column: auto; }
+    }
+
+    /* ─── SPONSORS ─── */
+    #sponsors { background: var(--bg-alt); padding: 64px 24px; }
+    .sponsors-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 36px;
+    }
+    .sponsors-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .sponsor-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      height: 52px;
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #bbb;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      filter: grayscale(1);
+      opacity: 0.6;
+      transition: filter 0.2s, opacity 0.2s;
+    }
+    .sponsor-item:hover { filter: none; opacity: 1; color: var(--navy); }
+
+    /* ─── TRYOUT ─── */
+    #tryout { background: var(--navy); }
+    .tryout-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .tryout-left {}
+    .tryout-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .perk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .perk-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(245,183,49,0.1);
+      border: 1px solid rgba(245,183,49,0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .perk-title { font-size: 14px; font-weight: 900; color: var(--white); margin-bottom: 3px; }
+    .perk-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+    .tryout-form {}
+    .form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--white);
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: rgba(245,183,49,0.05);
+    }
+    .form-group select option { background: var(--navy-light); color: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(245,183,49,0.3);
+    }
+    .btn-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(245,183,49,0.45);
+    }
+
+    @media (max-width: 768px) {
+      .tryout-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #060d1e;
+      border-top: 1px solid rgba(245,183,49,0.12);
+      padding: 52px 24px 28px;
+    }
+    .footer-inner { max-width: 1140px; margin: 0 auto; }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 28px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .footer-logo img { height: 44px; width: 44px; object-fit: contain; border-radius: 50%; }
+    .footer-logo span {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    .footer-slogan { font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
+    .footer-tagline { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-col-title {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .social-btn:hover {
+      background: rgba(245,183,49,0.12);
+      border-color: rgba(245,183,49,0.35);
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="#hero">
+      <img src="logo.jpg" alt="JGG" />
+      <span>JGG</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#roster">로스터</a></li>
+      <li><a href="#achievements">전적</a></li>
+      <li><a href="#matches">경기</a></li>
+      <li><a href="#news">뉴스</a></li>
+      <li><a href="#tryout">트라이아웃</a></li>
+    </ul>
+    <a href="#tryout" class="nav-cta">지원하기</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#roster" onclick="closeMobile()">로스터</a>
+    <a href="#achievements" onclick="closeMobile()">전적</a>
+    <a href="#matches" onclick="closeMobile()">경기 일정</a>
+    <a href="#news" onclick="closeMobile()">뉴스</a>
+    <a href="#tryout" onclick="closeMobile()" style="color:var(--gold)">트라이아웃 지원 →</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <img src="logo.jpg" alt="JGG" class="hero-logo" />
+      <div class="hero-games">
+        <div class="game-badge lol">⚔ League of Legends</div>
+        <div class="game-badge val">◈ Valorant</div>
+      </div>
+      <h1 class="hero-team-name"><span class="gold">JGG</span> Esports</h1>
+      <p class="hero-slogan">언제나 즐겁게</p>
+      <div class="hero-buttons">
+        <a href="#roster" class="btn-primary">팀 로스터 보기</a>
+        <a href="#tryout" class="btn-outline">트라이아웃 지원</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number" data-target="0">0</div>
+          <div class="stat-label">대회 우승</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="6">0</div>
+          <div class="stat-label">선수</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="2">0</div>
+          <div class="stat-label">종목</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="2025">0</div>
+          <div class="stat-label">창단</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ROSTER -->
+  <section id="roster">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-eyebrow">Our Players</p>
+        <h2 class="section-title">팀 <span class="gold">로스터</span></h2>
+        <div class="gold-bar"></div>
+      </div>
+      <div class="reveal roster-tabs" id="rosterTabs">
+        <button class="tab-btn active" data-tab="lol">⚔ 리그오브레전드</button>
+        <button class="tab-btn" data-tab="val">◈ 발로란트</button>
+      </div>
+
+      <!-- LoL 로스터 (5명) -->
+      <div class="roster-panel active" id="tab-lol">
+        <div class="roster-grid">
+          <div class="player-card reveal">
+            <div class="player-avatar lol-bg">
+              🛡️
+              <span class="player-avatar-num">1</span>
+              <span class="player-game-badge lol">LoL</span>
+            </div>
+            <div class="player-info">
+              <div class="player-role">Top Laner</div>
+              <div class="player-nickname">이동영</div>
+              <div class="player-realname">Lee Dong-young</div>
+              <div class="player-stats-row">
+                <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
+                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="player-card reveal reveal-delay-1">
+            <div class="player-avatar lol-bg">
+              🌀
+              <span class="player-avatar-num">2</span>
+              <span class="player-game-badge lol">LoL</span>
+            </div>
+            <div class="player-info">
+              <div class="player-role">Jungler</div>
+              <div class="player-nickname">황신한</div>
+              <div class="player-realname">Hwang Shin-han</div>
+              <div class="player-stats-row">
+                <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
+                <div class="player-stat"><div class="player-stat-val">3년</div><div class="player-stat-lbl">경력</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="player-card reveal reveal-delay-2">
+            <div class="player-avatar lol-bg">
+              ⚡
+              <span class="player-avatar-num">3</span>
+              <span class="player-game-badge lol">LoL</span>
+            </div>
+            <div class="player-info">
+              <div class="player-role">Mid Laner</div>
+              <div class="player-nickname">김민서</div>
+              <div class="player-realname">Kim Min-seo</div>
+              <div class="player-stats-row">
+                <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
+                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="player-card reveal">
+            <div class="player-avatar lol-bg">
+              🏹
+              <span class="player-avatar-num">4</span>
+              <span class="player-game-badge lol">LoL</span>
+            </div>
+            <div class="player-info">
+              <div class="player-role">Bot Laner (ADC)</div>
+              <div class="player-nickname">이주형</div>
+              <div class="player-realname">Lee Ju-hyung</div>
+              <div class="player-stats-row">
+                <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
+                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="player-card reveal reveal-delay-1">
+            <div class="player-avatar lol-bg">
+              💎
+              <span class="player-avatar-num">5</span>
+              <span class="player-game-badge lol">LoL</span>
+            </div>
+            <div class="player-info">
+              <div class="player-role">Support</div>
+              <div class="player-nickname">김범진</div>
+              <div class="player-realname">Kim Beom-jin</div>
+              <div class="player-stats-row">
+                <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
+                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 발로란트 로스터 (1명) -->
+      <div class="roster-panel" id="tab-val">
+        <div class="val-featured-wrap">
+          <div class="player-card featured-val reveal">
+            <div class="player-avatar val-bg">
+              💨
+              <span class="player-avatar-num">6</span>
+              <span class="player-game-badge val">VAL</span>
+            </div>
+            <div class="player-info">
+              <div class="player-role">Controller · IGL</div>
+              <div class="player-nickname">오둥이</div>
+              <div class="player-realname">Oh Dung-i</div>
+              <div class="player-stats-row">
+                <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
+                <div class="player-stat"><div class="player-stat-val">1년</div><div class="player-stat-lbl">경력</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="section-inner">
+      <div class="achievements-inner">
+        <div class="reveal">
+          <p class="section-eyebrow">Hall of Fame</p>
+          <h2 class="section-title light">주요 <span class="gold">수상</span></h2>
+          <div class="gold-bar"></div>
+          <p class="section-desc light">JGG는 창단 이래 국내외 주요 대회에서 꾸준한 성과를 올리며 최정상 팀으로 성장하고 있습니다.</p>
+          <div class="achievements-trophies" style="margin-top:32px;">
+            <div class="trophy-card">
+              <div class="trophy-icon">🏆</div>
+              <div class="trophy-title">수상 이력 없음</div>
+              <div class="trophy-meta">2025 · 창단</div>
+            </div>
+            <div class="trophy-card">
+              <div class="trophy-icon">🥇</div>
+              <div class="trophy-title">수상 이력 없음</div>
+              <div class="trophy-meta">2025 · 창단</div>
+            </div>
+            <div class="trophy-card">
+              <div class="trophy-icon">🎖️</div>
+              <div class="trophy-title">수상 이력 없음</div>
+              <div class="trophy-meta">2025 · 창단</div>
+            </div>
+            <div class="trophy-card">
+              <div class="trophy-icon">⭐</div>
+              <div class="trophy-title">수상 이력 없음</div>
+              <div class="trophy-meta">2023 · Valorant</div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal achievement-stats">
+          <div class="ach-stat-card">
+            <div class="ach-stat-num">0</div>
+            <div class="ach-stat-lbl">총 대회 입상<br />2025 창단</div>
+          </div>
+          <div class="ach-stat-card">
+            <div class="ach-stat-num">65%</div>
+            <div class="ach-stat-lbl">올 시즌 승률<br />정규리그 기준</div>
+          </div>
+          <div class="ach-stat-card">
+            <div class="ach-stat-num">2</div>
+            <div class="ach-stat-lbl">참가 종목<br />LoL · Valorant</div>
+          </div>
+          <div class="ach-stat-card">
+            <div class="ach-stat-num">2025</div>
+            <div class="ach-stat-lbl">창단 연도<br />JGG Esports</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCHES -->
+  <section id="matches">
+    <div class="section-inner">
+      <div class="reveal" style="margin-bottom:40px;">
+        <p class="section-eyebrow">Schedule &amp; Results</p>
+        <h2 class="section-title">경기 <span class="gold">일정</span></h2>
+        <div class="gold-bar"></div>
+      </div>
+      <div class="matches-grid">
+        <div class="reveal">
+          <div class="matches-col-title">다가오는 경기</div>
+        </div>
+        <div class="reveal">
+          <div class="matches-col-title">최근 결과</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news">
+    <div class="section-inner">
+      <div class="news-header reveal">
+        <div>
+          <p class="section-eyebrow">Team News</p>
+          <h2 class="section-title">최신 <span class="gold">뉴스</span></h2>
+          <div class="gold-bar"></div>
+        </div>
+        <a href="#" class="btn-primary" style="font-size:12px;padding:12px 24px;">전체 보기 →</a>
+      </div>
+      <div class="news-grid"></div>
+    </div>
+  </section>
+
+  <!-- SPONSORS -->
+  <section id="sponsors">
+    <div class="section-inner">
+      <div class="sponsors-label">파트너 & 스폰서</div>
+      <div class="sponsors-row">
+        <div class="sponsor-item">Partner A</div>
+        <div class="sponsor-item">Partner B</div>
+        <div class="sponsor-item">Partner C</div>
+        <div class="sponsor-item">Partner D</div>
+        <div class="sponsor-item">Partner E</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRYOUT -->
+  <section id="tryout">
+    <div class="section-inner">
+      <div class="tryout-inner">
+        <div class="reveal">
+          <p class="section-eyebrow">Join JGG</p>
+          <h2 class="section-title light">트라이<span class="gold">아웃</span></h2>
+          <div class="gold-bar"></div>
+          <p class="section-desc light">JGG와 함께 정상을 향해 달릴 선수를 찾습니다.<br />실력과 열정만 있다면 누구든 지원 가능합니다.</p>
+          <div style="margin-top:36px;">
+            <p style="font-size:11px;font-weight:900;letter-spacing:3px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:12px;">문의 이메일</p>
+            <a href="mailto:qjawls1220@gmail.com" style="
+              display:inline-block;
+              font-family:'Oswald',sans-serif;
+              font-size:20px;
+              font-weight:700;
+              letter-spacing:2px;
+              color:var(--gold);
+              background:rgba(245,183,49,0.08);
+              border:1px solid rgba(245,183,49,0.35);
+              padding:16px 32px;
+              border-radius:4px;
+              text-decoration:none;
+              transition:background 0.2s, box-shadow 0.2s;
+            " onmouseover="this.style.background='rgba(245,183,49,0.15)';this.style.boxShadow='0 6px 28px rgba(245,183,49,0.25)'"
+               onmouseout="this.style.background='rgba(245,183,49,0.08)';this.style.boxShadow='none'">
+              qjawls1220@gmail.com
+            </a>
+          </div>
+        </div>
+        <div class="tryout-form reveal">
+          <div class="form-title">지원서 작성</div>
+          <form action="https://formsubmit.co/qjawls1220@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="JGG 트라이아웃 지원서" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <div class="form-row">
+              <div class="form-group">
+                <label>닉네임</label>
+                <input type="text" name="닉네임" placeholder="인게임 닉네임" required />
+              </div>
+              <div class="form-group">
+                <label>실명</label>
+                <input type="text" name="실명" placeholder="홍길동" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>이메일</label>
+                <input type="email" name="이메일" placeholder="example@email.com" required />
+              </div>
+              <div class="form-group">
+                <label>연락처</label>
+                <input type="text" name="연락처" placeholder="010-0000-0000" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>지원 종목</label>
+                <select name="지원종목" required>
+                  <option value="">선택하세요</option>
+                  <option>리그오브레전드</option>
+                  <option>발로란트</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>포지션 / 역할</label>
+                <select name="포지션">
+                  <option value="">선택하세요</option>
+                  <option>Top</option>
+                  <option>Jungle</option>
+                  <option>Mid</option>
+                  <option>Bot (ADC)</option>
+                  <option>Support</option>
+                  <option>Duelist</option>
+                  <option>Initiator</option>
+                  <option>Controller</option>
+                  <option>Sentinel</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>현재 티어</label>
+              <input type="text" name="현재티어" placeholder="챌린저 / 레디언트 등" required />
+            </div>
+            <div class="form-group">
+              <label>자기소개</label>
+              <textarea name="자기소개" placeholder="경력, 참가 대회, 지원 동기 등을 자유롭게 작성해주세요."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">지원서 제출하기</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">
+            <img src="logo.jpg" alt="JGG" />
+            <span>JGG Esports</span>
+          </div>
+          <p class="footer-slogan">언제나 즐겁게!</p>
+          <p class="footer-tagline">⚔ LoL &nbsp;|&nbsp; ◈ Valorant</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigate</div>
+          <ul class="footer-links">
+            <li><a href="#roster">팀 로스터</a></li>
+            <li><a href="#achievements">수상 기록</a></li>
+            <li><a href="#matches">경기 일정</a></li>
+            <li><a href="#news">뉴스</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Join</div>
+          <ul class="footer-links">
+            <li><a href="#tryout">트라이아웃 지원</a></li>
+            <li><a href="#">스폰서십 문의</a></li>
+            <li><a href="#">미디어 문의</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Follow</div>
+          <ul class="footer-links">
+            <li><a href="https://www.youtube.com/@%EA%BF%80%EB%B2%94%EB%B2%94" target="_blank">YouTube</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="https://chzzk.naver.com/1b0d623062dfe62b62199f7dbf5b9949" target="_blank">치지직</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 JGG Esports. All rights reserved.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn">▶</a>
+          <a href="#" class="social-btn">📷</a>
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">🎮</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+    // 햄버거
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+    function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+    // 로스터 탭
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.roster-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // 숫자 카운트 애니메이션
+    function animateCount(el) {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.target.replace(/[0-9]/g, '');
+      let current = 0;
+      const step = Math.ceil(target / 40);
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current + suffix;
+        if (current >= target) clearInterval(timer);
+      }, 40);
+    }
+    const countObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); countObserver.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-target]').forEach(el => countObserver.observe(el));
+
+    // Reveal 애니메이션
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 70);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 폼 제출
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-submit');
+      btn.textContent = '지원 완료! ✓';
+      btn.style.background = '#2ecc71';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = '지원서 제출하기';
+        btn.style.background = '';
+        btn.style.color = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
