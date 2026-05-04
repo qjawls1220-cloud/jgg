@@ -2067,16 +2067,13 @@
       grid.innerHTML = snap.docs.map((doc, i) => {
         const d = doc.data();
         const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleDateString('ko-KR') : '';
-        const excerpt = (d.content || '').replace(/\n/g, ' ').slice(0, 80) + ((d.content || '').length > 80 ? '…' : '');
         return `
           <div class="news-card${i === 0 ? ' featured' : ''}" onclick="openPost('${doc.id}')" style="cursor:pointer;">
-            <div class="news-meta">
-              <span class="news-tag">${catIcon[d.category] || '📝'} ${d.category}</span>
-              <span class="news-date">${date}</span>
+            <div class="news-body" style="padding:18px 20px;">
+              <div class="news-date">${date}</div>
+              <div class="news-title">${d.title}</div>
+              <div style="margin-top:10px;font-size:12px;color:var(--text-muted);">✍️ ${d.author}</div>
             </div>
-            <div class="news-title">${d.title}</div>
-            <div class="news-excerpt">${excerpt}</div>
-            <div style="margin-top:12px;font-size:12px;color:var(--text-muted);">✍️ ${d.author}</div>
           </div>`;
       }).join('');
     });
