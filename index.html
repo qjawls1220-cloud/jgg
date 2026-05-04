@@ -1704,7 +1704,7 @@
   <div class="write-modal-overlay" id="writeModal" onclick="closeWriteOutside(event)">
     <div class="write-modal">
       <button class="modal-close" onclick="closeWrite()">✕</button>
-      <div class="write-modal-title">글 작성</div>
+      <div class="write-modal-title" id="write-modal-title-text">글 작성</div>
       <form id="writeForm" onsubmit="submitPost(event)">
         <div class="write-group">
           <label>카테고리</label>
@@ -1752,8 +1752,9 @@
       <div class="post-modal-meta" id="postMeta"></div>
       <div class="post-media" id="postMedia" style="display:none;"></div>
       <div class="post-modal-body" id="postBody"></div>
-      <div style="margin-top:28px;text-align:right;">
-        <button id="deleteBtn" onclick="deletePost()" style="display:none;background:#e74c3c;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;">🗑 글 삭제</button>
+      <div style="margin-top:28px;display:flex;justify-content:flex-end;gap:10px;">
+        <button id="editBtn"   onclick="openEdit()"   style="display:none;background:rgba(245,183,49,0.15);color:var(--gold);border:1px solid rgba(245,183,49,0.4);border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;">✏️ 수정</button>
+        <button id="deleteBtn" onclick="deletePost()" style="display:none;background:#e74c3c;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;">🗑 삭제</button>
       </div>
     </div>
   </div>
@@ -2029,7 +2030,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
     const firebaseConfig = {
@@ -2106,11 +2107,12 @@
         mediaBox.style.display = 'none';
       }
 
-      // 삭제 버튼: 본인 글 또는 관리자
+      // 수정/삭제 버튼: 본인 글 또는 관리자
       const user = auth.currentUser;
-      const deleteBtn = document.getElementById('deleteBtn');
-      const canDelete = user && (user.uid === d.uid || user.email === ADMIN_EMAIL);
-      deleteBtn.style.display = canDelete ? 'inline-block' : 'none';
+      const canEdit   = user && (user.uid === d.uid || user.email === ADMIN_EMAIL);
+      const canDelete = canEdit;
+      document.getElementById('editBtn').style.display   = canEdit   ? 'inline-block' : 'none';
+      document.getElementById('deleteBtn').style.display = canDelete ? 'inline-block' : 'none';
 
       document.getElementById('postModal').classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -2119,6 +2121,21 @@
       document.getElementById('postModal').classList.remove('open');
       document.body.style.overflow = '';
       currentPostId = null;
+    };
+
+    // ── 수정 모달 열기 (글쓰기 모달 재사용) ──
+    window.openEdit = () => {
+      const d = postCache[currentPostId];
+      if (!d) return;
+      // 상세 모달 닫고 글쓰기 모달에 기존 내용 채우기
+      document.getElementById('postModal').classList.remove('open');
+      const form = document.getElementById('writeForm');
+      form.category.value = d.category || '';
+      form.title.value    = d.title    || '';
+      form.content.value  = d.content  || '';
+      document.getElementById('write-modal-title-text').textContent = '글 수정';
+      document.getElementById('postBtn').textContent = '수정 완료';
+      document.getElementById('writeModal').classList.add('open');
     };
     window.closePostOutside = (e) => {
       if (e.target === document.getElementById('postModal')) window.closePost();
@@ -2172,6 +2189,7 @@
       document.getElementById('writeModal').classList.remove('open');
       document.body.style.overflow = '';
       document.getElementById('writeForm').reset();
+      document.getElementById('write-modal-title-text').textContent = '글 작성';
       document.getElementById('fileInput').value = '';
       document.getElementById('fileLabel').className = 'file-upload-label';
       document.getElementById('fileLabel').textContent = '📎 파일을 선택하거나 여기에 끌어다 놓으세요';
@@ -2240,18 +2258,32 @@
           fileType = file.type;
         }
 
-        btn.textContent = '게시 중...';
-        await addDoc(newsCol, {
-          category:  form.category.value,
-          title:     form.title.value.trim(),
-          content:   form.content.value.trim(),
-          author:    user.displayName || user.email,
-          uid:       user.uid,
-          createdAt: serverTimestamp(),
-          ...(fileUrl  && { fileUrl }),
-          ...(fileType && { fileType }),
-          ...(filePath && { filePath }),
-        });
+        btn.textContent = '저장 중...';
+        const isEdit = document.getElementById('write-modal-title-text').textContent === '글 수정';
+
+        if (isEdit && currentPostId) {
+          const updates = {
+            category: form.category.value,
+            title:    form.title.value.trim(),
+            content:  form.content.value.trim(),
+            ...(fileUrl  && { fileUrl }),
+            ...(fileType && { fileType }),
+            ...(filePath && { filePath }),
+          };
+          await updateDoc(doc(db, 'news', currentPostId), updates);
+        } else {
+          await addDoc(newsCol, {
+            category:  form.category.value,
+            title:     form.title.value.trim(),
+            content:   form.content.value.trim(),
+            author:    user.displayName || user.email,
+            uid:       user.uid,
+            createdAt: serverTimestamp(),
+            ...(fileUrl  && { fileUrl }),
+            ...(fileType && { fileType }),
+            ...(filePath && { filePath }),
+          });
+        }
         window.closeWrite();
       } catch (err) {
         btn.textContent = '오류: ' + err.message;
