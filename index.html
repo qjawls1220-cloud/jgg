@@ -103,6 +103,159 @@
 
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .hamburger span { width: 26px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+    /* ─── AUTH BUTTONS ─── */
+    .nav-auth { display: flex; gap: 8px; align-items: center; }
+    .btn-login {
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-login:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-signup {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+    .btn-signup:hover { background: var(--gold-light); }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #111827;
+      border: 1px solid rgba(245,183,49,0.2);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      padding: 40px;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(-20px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--white); }
+    .modal-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .modal-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: contain; }
+    .modal-logo span {
+      font-family: 'Oswald', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+    .modal-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px;
+    }
+    .modal-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      letter-spacing: 1px;
+    }
+    .modal-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .modal-form { display: none; }
+    .modal-form.active { display: block; }
+    .modal-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .modal-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .modal-group input {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--white);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .modal-group input::placeholder { color: rgba(255,255,255,0.2); }
+    .modal-group input:focus { border-color: var(--gold); }
+    .modal-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .modal-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .modal-switch {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+    }
+    .modal-switch a {
+      color: var(--gold);
+      cursor: pointer;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .modal-switch a:hover { text-decoration: underline; }
     .mobile-menu {
       display: none;
       position: fixed;
@@ -739,6 +892,157 @@
       flex-wrap: wrap;
       gap: 16px;
     }
+    .btn-write {
+      display: none;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 900;
+      font-size: 13px;
+      padding: 12px 24px;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+    .btn-write:hover { background: var(--gold-light); }
+    .news-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 64px 24px;
+      color: #aaa;
+      font-size: 15px;
+      border: 2px dashed rgba(0,0,0,0.08);
+      border-radius: 12px;
+    }
+    .news-empty span { display: block; font-size: 36px; margin-bottom: 12px; }
+
+    /* 글쓰기 모달 */
+    .write-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .write-modal-overlay.open { display: flex; }
+    .write-modal {
+      background: #111827;
+      border: 1px solid rgba(245,183,49,0.2);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 560px;
+      padding: 40px;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+    .write-modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--white);
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .write-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .write-group label {
+      font-size: 11px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .write-group input,
+    .write-group select,
+    .write-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--white);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .write-group input:focus,
+    .write-group select:focus,
+    .write-group textarea:focus { border-color: var(--gold); }
+    .write-group input::placeholder,
+    .write-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .write-group select option { background: #1a2744; }
+    .write-group textarea { min-height: 130px; resize: vertical; }
+    .write-footer { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+    .btn-cancel {
+      padding: 12px 24px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-cancel:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+    .btn-post {
+      padding: 12px 32px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+    }
+    .btn-post:hover { background: var(--gold-light); }
+
+    /* ─── 파일 업로드 ─── */
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 2px dashed rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .file-upload-label:hover { border-color: var(--gold); color: var(--gold); }
+    .file-upload-label.has-file { border-color: rgba(245,183,49,0.6); color: var(--gold); }
+    .upload-bar-wrap {
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+      display: none;
+    }
+    .upload-bar { height: 100%; background: var(--gold); width: 0%; transition: width 0.15s; border-radius: 2px; }
+    .file-preview-thumb {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-top: 10px;
+      display: block;
+    }
+    /* 게시글 상세 미디어 */
+    .post-media { margin-bottom: 24px; border-radius: 10px; overflow: hidden; }
+    .post-media img { width: 100%; display: block; }
+    .post-media video { width: 100%; display: block; border-radius: 10px; background: #000; }
+
     .news-grid {
       display: grid;
       grid-template-columns: 1.5fr 1fr 1fr;
@@ -800,6 +1104,62 @@
     @media (max-width: 560px) {
       .news-grid { grid-template-columns: 1fr; }
       .news-card.featured { grid-column: auto; }
+    }
+
+    /* ─── POST DETAIL MODAL ─── */
+    .post-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .post-modal-overlay.open { display: flex; }
+    .post-modal {
+      background: #111827;
+      border: 1px solid rgba(245,183,49,0.2);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 40px 40px 32px;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+    .post-modal-cat {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .post-modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .post-modal-meta {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 16px;
+    }
+    .post-modal-body {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     /* ─── SPONSORS ─── */
@@ -1030,6 +1390,57 @@
 </head>
 <body>
 
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="authModal" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-logo">
+        <img src="logo.jpg" alt="JGG" />
+        <span>JGG</span>
+      </div>
+      <div class="modal-tabs">
+        <div class="modal-tab active" id="tab-login" onclick="switchTab('login')">로그인</div>
+        <div class="modal-tab" id="tab-signup" onclick="switchTab('signup')">회원가입</div>
+      </div>
+
+      <!-- 로그인 폼 -->
+      <form class="modal-form active" id="form-login" onsubmit="handleAuth(event, '로그인')">
+        <div class="modal-group">
+          <label>이메일</label>
+          <input type="email" placeholder="example@email.com" required />
+        </div>
+        <div class="modal-group">
+          <label>비밀번호</label>
+          <input type="password" placeholder="비밀번호 입력" required />
+        </div>
+        <button type="submit" class="modal-submit">로그인</button>
+        <p class="modal-switch">계정이 없으신가요? <a onclick="switchTab('signup')">회원가입</a></p>
+      </form>
+
+      <!-- 회원가입 폼 -->
+      <form class="modal-form" id="form-signup" onsubmit="handleAuth(event, '회원가입')">
+        <div class="modal-group">
+          <label>닉네임</label>
+          <input type="text" placeholder="사용할 닉네임" required />
+        </div>
+        <div class="modal-group">
+          <label>이메일</label>
+          <input type="email" placeholder="example@email.com" required />
+        </div>
+        <div class="modal-group">
+          <label>비밀번호</label>
+          <input type="password" placeholder="8자 이상" required minlength="8" />
+        </div>
+        <div class="modal-group">
+          <label>비밀번호 확인</label>
+          <input type="password" placeholder="비밀번호 재입력" required minlength="8" />
+        </div>
+        <button type="submit" class="modal-submit">회원가입</button>
+        <p class="modal-switch">이미 계정이 있으신가요? <a onclick="switchTab('login')">로그인</a></p>
+      </form>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav id="nav">
     <a class="nav-logo" href="#hero">
@@ -1040,10 +1451,13 @@
       <li><a href="#roster">로스터</a></li>
       <li><a href="#achievements">전적</a></li>
       <li><a href="#matches">경기</a></li>
-      <li><a href="#news">뉴스</a></li>
+      <li><a href="#news">게시판</a></li>
       <li><a href="#tryout">트라이아웃</a></li>
     </ul>
-    <a href="#tryout" class="nav-cta">지원하기</a>
+    <div class="nav-auth">
+      <button class="btn-login" onclick="openModal('login')">로그인</button>
+      <button class="btn-signup" onclick="openModal('signup')">회원가입</button>
+    </div>
     <div class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </div>
@@ -1053,7 +1467,7 @@
     <a href="#roster" onclick="closeMobile()">로스터</a>
     <a href="#achievements" onclick="closeMobile()">전적</a>
     <a href="#matches" onclick="closeMobile()">경기 일정</a>
-    <a href="#news" onclick="closeMobile()">뉴스</a>
+    <a href="#news" onclick="closeMobile()">게시판</a>
     <a href="#tryout" onclick="closeMobile()" style="color:var(--gold)">트라이아웃 지원 →</a>
   </div>
 
@@ -1124,7 +1538,6 @@
               <div class="player-realname">Lee Dong-young</div>
               <div class="player-stats-row">
                 <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
-                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
               </div>
             </div>
           </div>
@@ -1140,7 +1553,6 @@
               <div class="player-realname">Hwang Shin-han</div>
               <div class="player-stats-row">
                 <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
-                <div class="player-stat"><div class="player-stat-val">3년</div><div class="player-stat-lbl">경력</div></div>
               </div>
             </div>
           </div>
@@ -1156,7 +1568,6 @@
               <div class="player-realname">Kim Min-seo</div>
               <div class="player-stats-row">
                 <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
-                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
               </div>
             </div>
           </div>
@@ -1172,7 +1583,6 @@
               <div class="player-realname">Lee Ju-hyung</div>
               <div class="player-stats-row">
                 <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
-                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
               </div>
             </div>
           </div>
@@ -1188,7 +1598,6 @@
               <div class="player-realname">Kim Beom-jin</div>
               <div class="player-stats-row">
                 <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
-                <div class="player-stat"><div class="player-stat-val">2년</div><div class="player-stat-lbl">경력</div></div>
               </div>
             </div>
           </div>
@@ -1210,7 +1619,6 @@
               <div class="player-realname">Oh Dung-i</div>
               <div class="player-stats-row">
                 <div class="player-stat"><div class="player-stat-val">KR</div><div class="player-stat-lbl">서버</div></div>
-                <div class="player-stat"><div class="player-stat-val">1년</div><div class="player-stat-lbl">경력</div></div>
               </div>
             </div>
           </div>
@@ -1292,18 +1700,81 @@
     </div>
   </section>
 
-  <!-- NEWS -->
+  <!-- 글쓰기 모달 -->
+  <div class="write-modal-overlay" id="writeModal" onclick="closeWriteOutside(event)">
+    <div class="write-modal">
+      <button class="modal-close" onclick="closeWrite()">✕</button>
+      <div class="write-modal-title">글 작성</div>
+      <form id="writeForm" onsubmit="submitPost(event)">
+        <div class="write-group">
+          <label>카테고리</label>
+          <select name="category" required>
+            <option value="">선택하세요</option>
+            <option value="공지">📢 공지</option>
+            <option value="우승">🏆 우승</option>
+            <option value="선수">🎮 선수</option>
+            <option value="이벤트">🎉 이벤트</option>
+            <option value="기타">📝 기타</option>
+          </select>
+        </div>
+        <div class="write-group">
+          <label>제목</label>
+          <input type="text" name="title" placeholder="제목을 입력하세요" required />
+        </div>
+        <div class="write-group">
+          <label>내용</label>
+          <textarea name="content" placeholder="내용을 입력하세요" required></textarea>
+        </div>
+        <div class="write-group">
+          <label>미디어 첨부 <span style="opacity:0.4;font-weight:400;">(선택 · 이미지/영상)</span></label>
+          <label class="file-upload-label" id="fileLabel" for="fileInput">
+            📎 파일을 선택하거나 여기에 끌어다 놓으세요
+          </label>
+          <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;" onchange="previewFile(this)" />
+          <div class="upload-bar-wrap" id="uploadBarWrap"><div class="upload-bar" id="uploadBar"></div></div>
+          <img id="filePreviewImg" class="file-preview-thumb" style="display:none;" />
+          <video id="filePreviewVid" class="file-preview-thumb" controls muted style="display:none;max-height:160px;"></video>
+        </div>
+        <div class="write-footer">
+          <button type="button" class="btn-cancel" onclick="closeWrite()">취소</button>
+          <button type="submit" class="btn-post" id="postBtn">게시하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 게시글 상세 모달 -->
+  <div class="post-modal-overlay" id="postModal" onclick="closePostOutside(event)">
+    <div class="post-modal">
+      <button class="modal-close" onclick="closePost()">✕</button>
+      <div class="post-modal-cat" id="postCat"></div>
+      <div class="post-modal-title" id="postTitle"></div>
+      <div class="post-modal-meta" id="postMeta"></div>
+      <div class="post-media" id="postMedia" style="display:none;"></div>
+      <div class="post-modal-body" id="postBody"></div>
+      <div style="margin-top:28px;text-align:right;">
+        <button id="deleteBtn" onclick="deletePost()" style="display:none;background:#e74c3c;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;">🗑 글 삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 게시판 -->
   <section id="news">
     <div class="section-inner">
       <div class="news-header reveal">
         <div>
-          <p class="section-eyebrow">Team News</p>
-          <h2 class="section-title">최신 <span class="gold">뉴스</span></h2>
+          <p class="section-eyebrow">Community</p>
+          <h2 class="section-title">팀 <span class="gold">게시판</span></h2>
           <div class="gold-bar"></div>
         </div>
-        <a href="#" class="btn-primary" style="font-size:12px;padding:12px 24px;">전체 보기 →</a>
+        <button class="btn-write" id="writeBtn" onclick="openWrite()">✏️ 글 작성</button>
       </div>
-      <div class="news-grid"></div>
+      <div class="news-grid" id="newsGrid">
+        <div class="news-empty">
+          <span>📭</span>
+          아직 작성된 글이 없습니다.<br />로그인 후 첫 번째 글을 작성해보세요!
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1435,7 +1906,7 @@
             <li><a href="#roster">팀 로스터</a></li>
             <li><a href="#achievements">수상 기록</a></li>
             <li><a href="#matches">경기 일정</a></li>
-            <li><a href="#news">뉴스</a></li>
+            <li><a href="#news">게시판</a></li>
           </ul>
         </div>
         <div>
@@ -1469,6 +1940,27 @@
   </footer>
 
   <script>
+    // 모달
+    function openModal(tab) {
+      document.getElementById('authModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      switchTab(tab);
+    }
+    function closeModal() {
+      document.getElementById('authModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeModalOutside(e) {
+      if (e.target === document.getElementById('authModal')) closeModal();
+    }
+    function switchTab(tab) {
+      document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.modal-form').forEach(f => f.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('form-' + tab).classList.add('active');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
     // Nav scroll
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
@@ -1531,6 +2023,291 @@
         e.target.reset();
       }, 3000);
     }
+  </script>
+
+  <!-- Firebase 연동 -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAg_f_cMG-XCNFpdjfgDkceT6zRFZpMwXs",
+      authDomain: "jgg-esports.firebaseapp.com",
+      projectId: "jgg-esports",
+      storageBucket: "jgg-esports.firebasestorage.app",
+      messagingSenderId: "1021979411723",
+      appId: "1:1021979411723:web:69925ef4bf16c9e090ce0e",
+      measurementId: "G-M329KK5DKE"
+    };
+
+    const ADMIN_EMAIL = 'qjawls1220@gmail.com';
+
+    const app     = initializeApp(firebaseConfig);
+    const auth    = getAuth(app);
+    const db      = getFirestore(app);
+    const storage = getStorage(app);
+
+    // ── 뉴스 게시판 실시간 로드 ──
+    const newsCol = collection(db, 'news');
+    const newsQ   = query(newsCol, orderBy('createdAt', 'desc'));
+
+    // 게시글 데이터 캐시 (상세 모달용)
+    const postCache = {};
+
+    onSnapshot(newsQ, (snap) => {
+      const grid = document.getElementById('newsGrid');
+      if (snap.empty) {
+        grid.innerHTML = `<div class="news-empty"><span>📭</span>아직 작성된 글이 없습니다.<br />로그인 후 첫 번째 글을 작성해보세요!</div>`;
+        return;
+      }
+      const catIcon = { '공지':'📢', '우승':'🏆', '선수':'🎮', '이벤트':'🎉', '기타':'📝' };
+      snap.docs.forEach(doc => { postCache[doc.id] = doc.data(); });
+      grid.innerHTML = snap.docs.map((doc, i) => {
+        const d = doc.data();
+        const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleDateString('ko-KR') : '';
+        const excerpt = (d.content || '').replace(/\n/g, ' ').slice(0, 80) + ((d.content || '').length > 80 ? '…' : '');
+        return `
+          <div class="news-card${i === 0 ? ' featured' : ''}" onclick="openPost('${doc.id}')" style="cursor:pointer;">
+            <div class="news-meta">
+              <span class="news-tag">${catIcon[d.category] || '📝'} ${d.category}</span>
+              <span class="news-date">${date}</span>
+            </div>
+            <div class="news-title">${d.title}</div>
+            <div class="news-excerpt">${excerpt}</div>
+            <div style="margin-top:12px;font-size:12px;color:var(--text-muted);">✍️ ${d.author}</div>
+          </div>`;
+      }).join('');
+    });
+
+    // ── 게시글 상세 모달 열기/닫기 ──
+    let currentPostId = null;
+
+    window.openPost = (id) => {
+      const d = postCache[id];
+      if (!d) return;
+      currentPostId = id;
+      const catIcon = { '공지':'📢', '우승':'🏆', '선수':'🎮', '이벤트':'🎉', '기타':'📝' };
+      const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString('ko-KR') : '';
+      document.getElementById('postCat').textContent   = `${catIcon[d.category] || '📝'} ${d.category}`;
+      document.getElementById('postTitle').textContent = d.title;
+      document.getElementById('postMeta').textContent  = `✍️ ${d.author}  ·  ${date}`;
+      document.getElementById('postBody').textContent  = d.content;
+
+      // 미디어 표시
+      const mediaBox = document.getElementById('postMedia');
+      mediaBox.innerHTML = '';
+      if (d.fileUrl && d.fileType) {
+        mediaBox.style.display = 'block';
+        if (d.fileType.startsWith('image/')) {
+          mediaBox.innerHTML = `<img src="${d.fileUrl}" alt="첨부 이미지" style="width:100%;border-radius:10px;" />`;
+        } else if (d.fileType.startsWith('video/')) {
+          mediaBox.innerHTML = `<video src="${d.fileUrl}" controls style="width:100%;border-radius:10px;background:#000;"></video>`;
+        }
+      } else {
+        mediaBox.style.display = 'none';
+      }
+
+      // 삭제 버튼: 본인 글 또는 관리자
+      const user = auth.currentUser;
+      const deleteBtn = document.getElementById('deleteBtn');
+      const canDelete = user && (user.uid === d.uid || user.email === ADMIN_EMAIL);
+      deleteBtn.style.display = canDelete ? 'inline-block' : 'none';
+
+      document.getElementById('postModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    window.closePost = () => {
+      document.getElementById('postModal').classList.remove('open');
+      document.body.style.overflow = '';
+      currentPostId = null;
+    };
+    window.closePostOutside = (e) => {
+      if (e.target === document.getElementById('postModal')) window.closePost();
+    };
+    window.deletePost = async () => {
+      if (!currentPostId) return;
+      if (!confirm('이 글을 삭제할까요?')) return;
+      try {
+        const d = postCache[currentPostId];
+        // Storage 파일도 함께 삭제
+        if (d && d.filePath) {
+          try { await deleteObject(storageRef(storage, d.filePath)); } catch (_) {}
+        }
+        await deleteDoc(doc(db, 'news', currentPostId));
+        window.closePost();
+      } catch (err) {
+        alert('삭제 실패: ' + err.message);
+      }
+    };
+
+    // ── 로그인 상태에 따라 Nav + 글쓰기 버튼 업데이트 ──
+    onAuthStateChanged(auth, (user) => {
+      const authArea = document.querySelector('.nav-auth');
+      const writeBtn = document.getElementById('writeBtn');
+      if (user) {
+        authArea.innerHTML = `
+          <span style="color:rgba(255,255,255,0.6);font-size:13px;font-weight:700;">
+            👤 ${user.displayName || user.email}
+          </span>
+          <button class="btn-login" onclick="window._logout()">로그아웃</button>
+        `;
+        if (writeBtn) writeBtn.style.display = 'inline-flex';
+      } else {
+        authArea.innerHTML = `
+          <button class="btn-login" onclick="openModal('login')">로그인</button>
+          <button class="btn-signup" onclick="openModal('signup')">회원가입</button>
+        `;
+        if (writeBtn) writeBtn.style.display = 'none';
+      }
+    });
+
+    // ── 로그아웃 ──
+    window._logout = () => signOut(auth);
+
+    // ── 글쓰기 모달 열기/닫기 ──
+    window.openWrite = () => {
+      document.getElementById('writeModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    window.closeWrite = () => {
+      document.getElementById('writeModal').classList.remove('open');
+      document.body.style.overflow = '';
+      document.getElementById('writeForm').reset();
+      document.getElementById('fileInput').value = '';
+      document.getElementById('fileLabel').className = 'file-upload-label';
+      document.getElementById('fileLabel').textContent = '📎 파일을 선택하거나 여기에 끌어다 놓으세요';
+      document.getElementById('filePreviewImg').style.display = 'none';
+      document.getElementById('filePreviewVid').style.display = 'none';
+      document.getElementById('uploadBarWrap').style.display = 'none';
+      document.getElementById('uploadBar').style.width = '0%';
+      const btn = document.getElementById('postBtn');
+      btn.textContent = '게시하기';
+      btn.disabled = false;
+    };
+
+    // ── 파일 미리보기 ──
+    window.previewFile = (input) => {
+      const file = input.files[0];
+      if (!file) return;
+      const label = document.getElementById('fileLabel');
+      label.className = 'file-upload-label has-file';
+      label.textContent = `✅ ${file.name}`;
+      const img = document.getElementById('filePreviewImg');
+      const vid = document.getElementById('filePreviewVid');
+      img.style.display = 'none';
+      vid.style.display = 'none';
+      const url = URL.createObjectURL(file);
+      if (file.type.startsWith('image/')) {
+        img.src = url; img.style.display = 'block';
+      } else if (file.type.startsWith('video/')) {
+        vid.src = url; vid.style.display = 'block';
+      }
+    };
+    window.closeWriteOutside = (e) => {
+      if (e.target === document.getElementById('writeModal')) window.closeWrite();
+    };
+
+    // ── 글 제출 ──
+    window.submitPost = async function(e) {
+      e.preventDefault();
+      const user = auth.currentUser;
+      if (!user) { alert('로그인이 필요합니다.'); return; }
+      const form   = e.target;
+      const btn    = document.getElementById('postBtn');
+      const barWrap = document.getElementById('uploadBarWrap');
+      const bar     = document.getElementById('uploadBar');
+      btn.disabled = true;
+
+      try {
+        let fileUrl  = null;
+        let fileType = null;
+        let filePath = null;
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+
+        if (file) {
+          btn.textContent = '업로드 중...';
+          barWrap.style.display = 'block';
+          filePath = `news/${Date.now()}_${file.name}`;
+          const sRef = storageRef(storage, filePath);
+          await new Promise((resolve, reject) => {
+            const task = uploadBytesResumable(sRef, file);
+            task.on('state_changed',
+              (snap) => { bar.style.width = (snap.bytesTransferred / snap.totalBytes * 100) + '%'; },
+              reject,
+              async () => { fileUrl = await getDownloadURL(task.snapshot.ref); resolve(); }
+            );
+          });
+          fileType = file.type;
+        }
+
+        btn.textContent = '게시 중...';
+        await addDoc(newsCol, {
+          category:  form.category.value,
+          title:     form.title.value.trim(),
+          content:   form.content.value.trim(),
+          author:    user.displayName || user.email,
+          uid:       user.uid,
+          createdAt: serverTimestamp(),
+          ...(fileUrl  && { fileUrl }),
+          ...(fileType && { fileType }),
+          ...(filePath && { filePath }),
+        });
+        window.closeWrite();
+      } catch (err) {
+        btn.textContent = '오류: ' + err.message;
+        btn.style.background = '#e74c3c';
+        setTimeout(() => { btn.textContent = '게시하기'; btn.style.background = ''; btn.disabled = false; barWrap.style.display = 'none'; }, 2500);
+      }
+    };
+
+    // ── 회원가입 / 로그인 ──
+    window.handleAuth = async function(e, type) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.modal-submit');
+      const inputs = e.target.querySelectorAll('input');
+      btn.textContent = type === '로그인' ? '로그인 중...' : '가입 중...';
+      btn.disabled = true;
+
+      try {
+        if (type === '회원가입') {
+          const nickname = inputs[0].value;
+          const email    = inputs[1].value;
+          const pw       = inputs[2].value;
+          const pw2      = inputs[3].value;
+          if (pw !== pw2) throw new Error('비밀번호가 일치하지 않습니다.');
+          const cred = await createUserWithEmailAndPassword(auth, email, pw);
+          await updateProfile(cred.user, { displayName: nickname });
+        } else {
+          const email = inputs[0].value;
+          const pw    = inputs[1].value;
+          await signInWithEmailAndPassword(auth, email, pw);
+        }
+        btn.textContent = '완료! ✓';
+        btn.style.background = '#2ecc71';
+        setTimeout(() => { closeModal(); btn.style.background = ''; btn.disabled = false; }, 1000);
+      } catch (err) {
+        const msg = {
+          'auth/email-already-in-use': '이미 사용 중인 이메일입니다.',
+          'auth/invalid-email': '이메일 형식이 올바르지 않습니다.',
+          'auth/user-not-found': '등록되지 않은 이메일입니다.',
+          'auth/wrong-password': '비밀번호가 틀렸습니다.',
+          'auth/weak-password': '비밀번호는 6자 이상이어야 합니다.',
+          'auth/invalid-credential': '이메일 또는 비밀번호를 확인해주세요.',
+        }[err.code] || err.message;
+        btn.textContent = msg;
+        btn.style.background = '#e74c3c';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+          btn.textContent = type === '로그인' ? '로그인' : '회원가입';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 2500);
+      }
+    };
   </script>
 </body>
 </html>
