@@ -29,6 +29,9 @@ uvicorn app.main:app --reload
 ```text
 GET    /health
 GET    /api/roster
+GET    /api/matches
+POST   /api/matches
+DELETE /api/matches/{match_id}
 GET    /api/posts
 POST   /api/posts
 PUT    /api/posts/{post_id}

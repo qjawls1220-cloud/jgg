@@ -23,6 +23,16 @@ async function request(path, options = {}) {
 
 export const api = {
   getRoster: () => request("/api/roster"),
+  listMatches: () => request("/api/matches"),
+  createMatch: (payload) =>
+    request("/api/matches", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+  deleteMatch: (id) =>
+    request(`/api/matches/${id}`, {
+      method: "DELETE",
+    }),
   listPosts: () => request("/api/posts"),
   createPost: (payload) =>
     request("/api/posts", {
