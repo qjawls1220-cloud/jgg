@@ -1,0 +1,1 @@
+"""JGG FastAPI application package."""
