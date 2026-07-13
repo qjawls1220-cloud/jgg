@@ -53,7 +53,7 @@ export default function Roster({ roster }) {
               const roleIcon = player.role_icon ?? roleIconByRole[player.role];
 
               return (
-                <article key={player.id} className={`player-card reveal reveal-delay-${index % 3}`}>
+                <article key={player.id} className={`player-card reveal visible reveal-delay-${index % 3}`}>
                   <div className={`player-avatar ${activeTab.avatarClass}`}>
                     {roleIcon && (
                       <img

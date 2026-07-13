@@ -43,14 +43,8 @@ export const achievementStats = [
 ];
 
 export const matches = {
-  upcoming: [
-    { day: "TBD", month: "2026", tournament: "Scrim Week", versus: "상대 미정", game: "LoL", result: "upcoming", resultText: "예정" },
-    { day: "TBD", month: "2026", tournament: "Valorant Open", versus: "상대 미정", game: "VAL", result: "upcoming", resultText: "예정" },
-  ],
-  recent: [
-    { day: "12", month: "JUL", tournament: "Internal Match", versus: "JGG Blue", game: "LoL", result: "win", resultText: "2 - 1" },
-    { day: "05", month: "JUL", tournament: "Community Cup", versus: "Team Alpha", game: "VAL", result: "loss", resultText: "11 - 13" },
-  ],
+  upcoming: [],
+  recent: [],
 };
 
 export const sponsors = ["Partner A", "Partner B", "Partner C", "Partner D", "Partner E"];

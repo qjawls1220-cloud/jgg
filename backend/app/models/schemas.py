@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -18,6 +18,26 @@ class Player(BaseModel):
 class RosterResponse(BaseModel):
     lol: list[Player]
     valorant: list[Player]
+
+
+class MatchCreate(BaseModel):
+    kind: Literal["upcoming", "recent"]
+    match_date: date
+    tournament: str = Field(min_length=1, max_length=120)
+    opponent: str = Field(min_length=1, max_length=120)
+    game: Literal["LoL", "VAL"]
+    result: Literal["upcoming", "win", "loss", "draw"] = "upcoming"
+    result_text: str = Field(min_length=1, max_length=40)
+
+
+class Match(MatchCreate):
+    id: str
+    created_at: datetime
+
+
+class MatchResponse(BaseModel):
+    upcoming: list[Match]
+    recent: list[Match]
 
 
 class PostCreate(BaseModel):
