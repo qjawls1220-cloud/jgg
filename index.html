@@ -1693,7 +1693,7 @@
             <div class="trophy-card">
               <div class="trophy-icon">⭐</div>
               <div class="trophy-title">수상 이력 없음</div>
-              <div class="trophy-meta">2023 · Valorant</div>
+              <div class="trophy-meta">2025 · Valorant</div>
             </div>
           </div>
         </div>
@@ -1863,7 +1863,7 @@
         </div>
         <div class="tryout-form reveal">
           <div class="form-title">지원서 작성</div>
-          <form action="https://api.web3forms.com/submit" method="POST">
+          <form id="tryoutForm" onsubmit="handleSubmit(event)">
             <input type="hidden" name="access_key" value="1e9f02c5-8596-4a5e-a1a1-f0ef9e7cb58d" />
             <input type="hidden" name="subject" value="JGG 트라이아웃 지원서" />
             <input type="hidden" name="redirect" value="false" />
@@ -2049,18 +2049,43 @@
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // 폼 제출
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.btn-submit');
-      btn.textContent = '지원 완료! ✓';
-      btn.style.background = '#2ecc71';
-      btn.style.color = '#fff';
-      setTimeout(() => {
-        btn.textContent = '지원서 제출하기';
-        btn.style.background = '';
-        btn.style.color = '';
-        e.target.reset();
-      }, 3000);
+      const form = e.target;
+      const btn = form.querySelector('.btn-submit');
+      const data = new FormData(form);
+      data.append('access_key', '1e9f02c5-8596-4a5e-a1a1-f0ef9e7cb58d');
+      data.append('subject', 'JGG 트라이아웃 지원서');
+
+      btn.textContent = '전송 중...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        });
+        const json = await res.json();
+        if (json.success) {
+          btn.textContent = '지원 완료! ✓';
+          btn.style.background = '#2ecc71';
+          btn.style.color = '#fff';
+          form.reset();
+          setTimeout(() => {
+            btn.textContent = '지원서 제출하기';
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+          }, 3000);
+        } else {
+          throw new Error(json.message || '전송 실패');
+        }
+      } catch (err) {
+        btn.textContent = '오류 발생 — 다시 시도해주세요';
+        btn.style.background = '#e74c3c';
+        btn.style.color = '#fff';
+        btn.disabled = false;
+      }
     }
   </script>
 
